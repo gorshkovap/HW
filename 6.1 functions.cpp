@@ -11,11 +11,11 @@ Arrays::Arrays(std::size_t n) : m_arr_size(n), m_arr(nullptr)
 	}		
 }
 
-Arrays::Arrays(const std::vector <int> &v) : m_v(v) {}
+Arrays::Arrays(const std::vector <int> &v) : m_v(v), m_arr_size(0), m_arr(nullptr) {}
 
 Arrays::Arrays(const int* arr, std::size_t n): m_arr_size(n), m_arr(nullptr)
 {
-	arr = new int[m_arr_size];
+	m_arr = new int[m_arr_size];
 	for (auto i = 0U; i < m_arr_size; ++i)
 	{
 		m_arr[i] = arr[i];
@@ -91,6 +91,8 @@ Arrays& Arrays::operator=(Arrays&& other)
 	other.m_arr_size = 0;
 	other.m_arr = nullptr;
 	other.m_v.clear();
+
+	return *this;
 }
 
 std::ostream& operator<<(std::ostream& stream, Arrays& array)
