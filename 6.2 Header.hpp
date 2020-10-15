@@ -2,63 +2,77 @@
 
 #include <iostream>
 
-class Fraction
+namespace frac
 {
-public:
-	Fraction();
+	class Fraction
+	{
+	public:
+		Fraction();
 
-	Fraction(int n, std::size_t d = 1U);
+		Fraction(int n, int d = 1);
 
-	~Fraction() = default;
+		~Fraction() = default;
 
-	Fraction(const Fraction& other);
-	Fraction(Fraction&& other) = default;
+		Fraction(const Fraction& other) = default;
+		Fraction(Fraction&& other) = default;
 
-	Fraction& operator=(Fraction& other) = default;
-	Fraction& operator=(Fraction&& other) = default;
+		Fraction& operator=(Fraction& other) = default;
+		Fraction& operator=(Fraction&& other) = default;
 
-	void reduction();
-	
-	explicit operator int() const;
+		explicit operator int() const;
 
-	explicit operator double() const;
+		explicit operator double() const;
 
-	friend std::ostream& operator<<(std::ostream& stream, const Fraction& fraction);
+	private:
+		void reduction();
 
-	friend std::istream& operator>>(std::istream& stream, Fraction& fraction);
+	public:
+		friend Fraction reverse(Fraction& fr);
+		friend Fraction minus(Fraction& fr);
 
-	friend Fraction operator+(const Fraction& lhs, const Fraction& rhs);
-	friend Fraction operator-(const Fraction& lhs, const Fraction& rhs);
-	friend Fraction operator*(const Fraction& lhs, const Fraction& rhs);
-	friend Fraction operator/(const Fraction& lhs, const Fraction& rhs);
+		friend std::ostream& operator<<(std::ostream& stream, const Fraction& fraction);
 
-	Fraction & operator+=(const Fraction& other);
-	Fraction & operator-=(const Fraction& other);
-	Fraction & operator*=(const Fraction& other);
-	Fraction & operator/=(const Fraction& other);
+		friend std::istream& operator>>(std::istream& stream, Fraction& fraction);
 
-	Fraction & operator++();
-	Fraction & operator--();
+		Fraction& operator+=(const Fraction& other);
+		Fraction& operator-=(const Fraction& other);
+		Fraction& operator*=(const Fraction& other);
+		Fraction& operator/=(const Fraction& other);
 
-	Fraction  operator++(int);
-	Fraction  operator--(int);
-	
+		Fraction& operator++();
+		Fraction& operator--();
 
-	friend bool operator==(const Fraction& lhs, const Fraction& rhs);
-	friend bool operator!=(const Fraction& lhs, const Fraction& rhs);
-	friend bool operator>=(const Fraction& lhs, const Fraction& rhs);
-	friend bool operator<=(const Fraction& lhs, const Fraction& rhs);
-	friend bool operator<(const Fraction& lhs, const Fraction& rhs);
-	friend bool operator>(const Fraction& lhs, const Fraction& rhs);
+		Fraction  operator++(int);
+		Fraction  operator--(int);
 
+		friend bool operator==(const Fraction& lhs, const Fraction& rhs);
+		friend bool operator!=(const Fraction& lhs, const Fraction& rhs);
+		friend bool operator>=(const Fraction& lhs, const Fraction& rhs);
+		friend bool operator<=(const Fraction& lhs, const Fraction& rhs);
+		friend bool operator<(const Fraction& lhs, const Fraction& rhs);
+		friend bool operator>(const Fraction& lhs, const Fraction& rhs);
 
-	int get_numerator();
-	std::size_t get_denominator();
+		int get_numerator() const
+		{
+			return m_numerator;
+		}
 
+		int get_denominator() const
+		{
+			return m_denominator;
+		}
 
-private:
-	int numerator;
-	std::size_t denominator;
-};
+	private:
+		int m_numerator;
+		int m_denominator;
+	};
 
-int gcd(int a, int b);
+	Fraction operator+(const Fraction& lhs, const Fraction& rhs);
+	Fraction operator-(const Fraction& lhs, const Fraction& rhs);
+	Fraction operator*(const Fraction& lhs, const Fraction& rhs);
+	Fraction operator/(const Fraction& lhs, const Fraction& rhs);
+
+	Fraction reverse(Fraction& fr);
+
+	Fraction minus(Fraction& fr);
+}
