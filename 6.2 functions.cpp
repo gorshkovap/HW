@@ -49,10 +49,9 @@ namespace frac
 
 	void Fraction::reduction()
 	{
-		int div = 1;
-		div = (m_numerator ? std::gcd(m_numerator, m_denominator) : m_denominator);
-		m_numerator = m_numerator / div;
-		m_denominator = m_denominator / div;
+		int	div = (m_numerator ? std::gcd(m_numerator, m_denominator) : m_denominator);
+		m_numerator /= div;
+		m_denominator /= div;
 	}
 
 	Fraction::operator int() const
@@ -186,14 +185,14 @@ namespace frac
 		return !(lhs < rhs);
 	}
 
-	Fraction reverse(Fraction& fr)
+	Fraction reverse(const Fraction& fr)
 	{
 		return 1 / fr;
 	}
 
-	Fraction minus(Fraction& fr)
+	Fraction minus(const Fraction& fr)
 	{
-		return  0 - fr;
+		return  -1 * fr;
 	}
 }
 

@@ -72,7 +72,7 @@ namespace frac
 	Fraction operator*(const Fraction& lhs, const Fraction& rhs);
 	Fraction operator/(const Fraction& lhs, const Fraction& rhs);
 
-	Fraction reverse(Fraction& fr);
+	Fraction reverse(const Fraction& fr);
 
-	Fraction minus(Fraction& fr);
+	Fraction minus(const Fraction& fr);
 }
