@@ -10,11 +10,11 @@ struct Point
 	Point();
 	Point(const double a, const double b);
 
-	friend std::ostream& operator<<(std::ostream& stream, const Point& point);
-
 	double x;
 	double y;
 };
+
+std::ostream& operator<<(std::ostream& stream, const Point& point);
 
 class Vector
 {
@@ -47,6 +47,7 @@ protected:
 public:
 	virtual ~Shape() = default;
 
+protected:
 	virtual void print() const = 0;
 	virtual double P() const = 0;
 	virtual double S() const = 0;
@@ -70,7 +71,7 @@ public:
 
 protected:
 	static const double pi;
-	double m_a; //радиус
+	double m_a; //radius
 };
 
 class Ellipse : public Circle
@@ -85,13 +86,13 @@ public:
 	virtual double S() const override;
 
 protected:
-	double m_b; //малая полуось
+	double m_b; //semi-minor axis
 };
 
 class Polygon : public Shape
 {
 protected:
-	Polygon();
+	Polygon() = default;
 	Polygon(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Polygon() = default;
 
@@ -107,7 +108,7 @@ protected:
 class Triangle : public Polygon
 {
 public:
-	Triangle();
+	Triangle() = default;
 	Triangle(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Triangle() = default;
 
@@ -119,7 +120,7 @@ public:
 class Square : public Polygon
 {
 public:
-	Square();
+	Square() = default;
 	Square(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Square() = default;
 
@@ -131,7 +132,7 @@ public:
 class Rectangle : public Polygon
 {
 public:
-	Rectangle();
+	Rectangle() = default;
 	Rectangle(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Rectangle() = default;
 
@@ -143,7 +144,7 @@ public:
 class Parallelogram : public Polygon
 {
 public:
-	Parallelogram();
+	Parallelogram() = default;
 	Parallelogram(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Parallelogram() = default;
 
@@ -155,7 +156,7 @@ public:
 class Rhombus : public Polygon
 {
 public:
-	Rhombus();
+	Rhombus() = default;
 	Rhombus(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Rhombus() = default;
 

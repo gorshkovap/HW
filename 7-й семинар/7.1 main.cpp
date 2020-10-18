@@ -17,9 +17,11 @@ int main()
 	shapes.push_back(new Rectangle(point, v_1, v_2));
 	shapes.push_back(new Rhombus(point, v_1, v_2));
 	shapes.push_back(new Parallelogram(point, v_1, v_2));
-	/*shapes.push_back(new Square(point, v_1, v_3));*/ // - действительно не работает
-	/*shapes.push_back(new Square(point, v_1, v_4));*/ // - действительно не работает
-
+	/*shapes.push_back(new Square(point, v_1, v_3));*/        // - doesn't work
+	/*shapes.push_back(new Square(point, v_1, v_4));*/        // - doesn't work
+	/*shapes.push_back(new Parallelogram(point, v_2, v_4));*/ // - doesn't work
+	/*shapes.push_back(new Rectangle(point, v_1, v_3));*/     // - doesn't work
+	
 	for (auto e : shapes)
 	{
 		std::cout << *e << "\n\n";

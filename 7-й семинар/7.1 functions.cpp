@@ -46,8 +46,7 @@ bool is_perp(const Vector& v_1, const Vector& v_2)
 
 Vector operator-(const Vector& v_1, const Vector& v_2)
 {
-	Vector v = {v_1.x - v_2.x, v_1.y - v_2.y};
-	return v;
+	return {v_1.x - v_2.x, v_1.y - v_2.y};
 }
 
 Shape::Shape() : m_point(){}
@@ -59,8 +58,8 @@ std::ostream& operator<<(std::ostream& stream, const Shape& shape)
 	return stream;
 }
 
-Circle::Circle() : m_a(0.0), Shape() {}
-Circle::Circle(const Point & point, const double r): m_a(r), Shape(point) {}
+Circle::Circle() : m_a(0.0){}
+Circle::Circle(const Point & point, const double r): Shape(point), m_a(r) {}
 
 void Circle::print() const
 {
@@ -79,8 +78,8 @@ double Circle::S() const
 
 const double Circle::pi = 3.1416;
 
-Ellipse::Ellipse() : m_b(0.0), Circle() {}
-Ellipse::Ellipse(const Point & point ,const double a,const double b) : m_b(b), Circle(point, a) {}
+Ellipse::Ellipse() : m_b(0.0){}
+Ellipse::Ellipse(const Point & point ,const double a,const double b) : Circle(point, a), m_b(b) {}
 
 void Ellipse::print() const
 {
@@ -97,7 +96,6 @@ double Ellipse::S() const
 	return pi * m_a * m_b;
 }
 
-Polygon::Polygon() : Shape(), side_1(), side_2() {}
 Polygon::Polygon(const Point & point, const Vector & v_1, const Vector & v_2)
 		: Shape(point), side_1(v_1), side_2(v_2) 
 {
@@ -108,7 +106,6 @@ Polygon::Polygon(const Point & point, const Vector & v_1, const Vector & v_2)
 	}
 }
 
-Triangle::Triangle() : Polygon(){}
 Triangle::Triangle(const Point& point, const Vector &v_1, const Vector &v_2) : Polygon(point, v_1, v_2){}
 
 void Triangle::print() const
@@ -128,7 +125,6 @@ double Triangle::S() const
 	return vec_mul(side_1, side_2) / 2;
 }
 
-Square::Square() : Polygon() {}
 Square::Square(const Point& point, const Vector& v_1, const Vector& v_2) : Polygon(point, v_1, v_2)
 {
 	if (!(is_equal(side_1.len(), side_2.len())) || !(is_perp(v_1, v_2)))
@@ -154,8 +150,14 @@ double Square::S() const
 	return side_1.len() * side_1.len();
 }
 
-Rectangle::Rectangle() : Polygon() {}
-Rectangle::Rectangle(const Point& point, const Vector& v_1, const Vector& v_2) : Polygon(point, v_1, v_2) {}
+Rectangle::Rectangle(const Point& point, const Vector& v_1, const Vector& v_2) : Polygon(point, v_1, v_2) 
+{
+	if (!(is_perp(v_1, v_2)))
+	{
+		std::cerr << "\nerror: the angle isn't right\n";
+		std::abort();
+	}
+}
 
 void Rectangle::print() const
 {
@@ -173,7 +175,6 @@ double Rectangle::S() const
 	return side_1.len() * side_2.len();
 }
 
-Parallelogram::Parallelogram() : Polygon() {}
 Parallelogram::Parallelogram(const Point& point, const Vector& v_1, const Vector& v_2) : Polygon(point, v_1, v_2) {}
 
 void Parallelogram::print() const
@@ -193,7 +194,6 @@ double Parallelogram::S() const
 	return vec_mul(side_1, side_2);
 }
 
-Rhombus::Rhombus() : Polygon() {}
 Rhombus::Rhombus(const Point& point, const Vector& v_1, const Vector& v_2) : Polygon(point, v_1, v_2)
 {
 	if (!(is_equal(side_1.len(), side_2.len())))
