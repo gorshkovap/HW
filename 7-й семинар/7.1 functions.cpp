@@ -6,7 +6,7 @@ Point::Point(const double a,const double b) : x(a), y(b){}
 
 std::ostream& operator<<(std::ostream& stream, const Point& point)
 {
-	std::cout << '(' << point.x << ", " << point.y << ')';
+	stream << '(' << point.x << ", " << point.y << ')';
 	return stream;
 }
 
@@ -15,7 +15,7 @@ Vector::Vector(double a, double b) : x(a), y(b) {}
 
 std::ostream& operator<<(std::ostream& stream, const Vector& vector)
 {
-	std::cout << '(' << vector.x << ", " << vector.y << ')';
+	stream << '(' << vector.x << ", " << vector.y << ')';
 	return stream;
 }
 
@@ -54,16 +54,16 @@ Shape::Shape(const Point & point) : m_point(point){}
 
 std::ostream& operator<<(std::ostream& stream, const Shape& shape)
 {
-	shape.print();
+	shape.print(stream);
 	return stream;
 }
 
 Circle::Circle() : m_a(0.0){}
 Circle::Circle(const Point & point, const double r): Shape(point), m_a(r) {}
 
-void Circle::print() const
+void Circle::print(std::ostream& stream) const
 {
-	std::cout << "Circle: O = " << m_point << " r = " << m_a << " P = " << P() << " S = " << S();
+	stream << "Circle: O = " << m_point << " r = " << m_a << " P = " << P() << " S = " << S();
 }
 
 double Circle::P() const
@@ -81,9 +81,9 @@ const double Circle::pi = 3.1416;
 Ellipse::Ellipse() : m_b(0.0){}
 Ellipse::Ellipse(const Point & point ,const double a,const double b) : Circle(point, a), m_b(b) {}
 
-void Ellipse::print() const
+void Ellipse::print(std::ostream& stream) const
 {
-	std::cout << "Ellipse: O = " << m_point << " a = " << Circle::m_a << " b = " << m_b << " P = " << P() << " S = " << S();
+	stream << "Ellipse: O = " << m_point << " a = " << Circle::m_a << " b = " << m_b << " P = " << P() << " S = " << S();
 }
 
 double Ellipse::P() const
@@ -108,9 +108,9 @@ Polygon::Polygon(const Point & point, const Vector & v_1, const Vector & v_2)
 
 Triangle::Triangle(const Point& point, const Vector &v_1, const Vector &v_2) : Polygon(point, v_1, v_2){}
 
-void Triangle::print() const
+void Triangle::print(std::ostream& stream) const
 {
-	std::cout << "Triangle: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
+	stream << "Triangle: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
 		" P = " << P() << " S = " << S();
 }
 
@@ -134,9 +134,9 @@ Square::Square(const Point& point, const Vector& v_1, const Vector& v_2) : Polyg
 	}
 }
 
-void Square::print() const
+void Square::print(std::ostream& stream) const
 {
-	std::cout << "Square: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
+	stream << "Square: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
 		" lenght of sides = " << side_1.len() << " P = " << P() << " S = " << S();
 }
 
@@ -159,9 +159,9 @@ Rectangle::Rectangle(const Point& point, const Vector& v_1, const Vector& v_2) :
 	}
 }
 
-void Rectangle::print() const
+void Rectangle::print(std::ostream& stream) const
 {
-	std::cout << "Rectangle: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
+	stream << "Rectangle: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
 		" lenght of side 1 = " << side_1.len() << " lenght of side 2 = " << side_2.len() << " P = " << P() << " S = " << S();
 }
 
@@ -177,9 +177,9 @@ double Rectangle::S() const
 
 Parallelogram::Parallelogram(const Point& point, const Vector& v_1, const Vector& v_2) : Polygon(point, v_1, v_2) {}
 
-void Parallelogram::print() const
+void Parallelogram::print(std::ostream& stream) const
 {
-	std::cout << "Parallelogram: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
+	stream << "Parallelogram: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
 		" lenght of side 1 = " << side_1.len() << " lenght of side 2 = " << side_2.len() << " small angle = " <<
 		std::asin(S() / (side_1.len() * side_2.len())) << "rad" << " P = " << P() << " S = " << S();
 }
@@ -203,9 +203,9 @@ Rhombus::Rhombus(const Point& point, const Vector& v_1, const Vector& v_2) : Pol
 	}
 }
 
-void Rhombus::print() const
+void Rhombus::print(std::ostream& stream) const
 {
-	std::cout << "Rhombus: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
+	stream << "Rhombus: Starting point = " << m_point << " vector of side 1 = " << side_1 << " vector of side 2 = " << side_2 <<
 		" lenght of side 1 = " << side_1.len() << " lenght of side 2 = " << side_2.len() << " small angle = " <<
 		std::asin(S() / (side_1.len() * side_2.len())) << "rad" << " P = " << P() << " S = " << S();
 }

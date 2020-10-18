@@ -48,7 +48,7 @@ public:
 	virtual ~Shape() = default;
 
 protected:
-	virtual void print() const = 0;
+	virtual void print(std::ostream& stream) const = 0;
 	virtual double P() const = 0;
 	virtual double S() const = 0;
 
@@ -65,7 +65,7 @@ public:
 	Circle(const Point& point, const double r);
 	virtual ~Circle() = default;
 	
-	virtual void print() const override;
+	virtual void print(std::ostream& stream) const override;
 	virtual double P() const override;
 	virtual double S() const override;
 
@@ -81,7 +81,7 @@ public:
 	Ellipse(const Point& point, const double a, const double b);
 	virtual ~Ellipse() = default;
 
-	virtual void print() const override;
+	virtual void print(std::ostream& stream) const override;
 	virtual double P() const override;
 	virtual double S() const override;
 
@@ -96,7 +96,7 @@ protected:
 	Polygon(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Polygon() = default;
 
-	virtual void print() const override = 0;
+	virtual void print(std::ostream& stream) const override = 0;
 	virtual double P() const = 0;
 	virtual double S() const = 0;
 
@@ -112,7 +112,7 @@ public:
 	Triangle(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Triangle() = default;
 
-	virtual void print() const override;
+	virtual void print(std::ostream& stream) const override;
 	virtual double P() const override;
 	virtual double S() const override;
 };
@@ -124,7 +124,7 @@ public:
 	Square(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Square() = default;
 
-	virtual void print() const override;
+	virtual void print(std::ostream& stream) const override;
 	virtual double P() const override;
 	virtual double S() const override;
 };
@@ -136,7 +136,7 @@ public:
 	Rectangle(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Rectangle() = default;
 
-	virtual void print() const override;
+	virtual void print(std::ostream& stream) const override;
 	virtual double P() const override;
 	virtual double S() const override;
 };
@@ -148,7 +148,7 @@ public:
 	Parallelogram(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Parallelogram() = default;
 
-	virtual void print() const override;
+	virtual void print(std::ostream& stream) const override;
 	virtual double P() const override;
 	virtual double S() const override;
 };
@@ -160,7 +160,7 @@ public:
 	Rhombus(const Point& point, const Vector& v_1, const Vector& v_2);
 	virtual ~Rhombus() = default;
 
-	virtual void print() const override;
+	virtual void print(std::ostream& stream) const override;
 	virtual double P() const override;
 	virtual double S() const override;
 };
