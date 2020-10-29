@@ -79,14 +79,6 @@ namespace frac
 	class Fraction_exception : public std::exception
 	{
 	public:
-		Fraction_exception(const char* msg_1 = "", const char* msg_2 = "denominator = 0") noexcept : exception(msg_2), m_where(msg_1) {}
-
-		const char* where_is() const noexcept
-		{
-			return m_where;
-		}
-
-	private:
-		const char * m_where;
+		Fraction_exception(const std::string &str) noexcept : exception(str.c_str()) {}
 	};
 }

@@ -9,7 +9,7 @@ namespace frac
 	{
 		if (m_denominator == 0)
 		{
-			throw Fraction_exception (" in constructor Fraction(int, int)");
+			throw Fraction_exception ("denominator = 0 in constructor Fraction(int, int)");
 		}
 		if (m_denominator < 0)
 		{
@@ -23,12 +23,12 @@ namespace frac
 	{
 		if (fraction.m_denominator == 0)
 		{
-			throw Fraction_exception (" in the fraction for output");
+			throw Fraction_exception ("denominator = 0 in the fraction for output");
 		}
 		else
 		{
-			fraction.m_denominator == 1 ? std::cout << fraction.m_numerator
-				: std::cout << fraction.m_numerator << '/' << fraction.m_denominator;
+			fraction.m_denominator == 1 ? stream << fraction.m_numerator
+				: stream << fraction.m_numerator << '/' << fraction.m_denominator;
 		}
 		return stream;
 	}
@@ -36,10 +36,10 @@ namespace frac
 	std::istream& operator>>(std::istream& stream, Fraction& fraction)
 	{
 		char c = '\0';
-		std::cin >> fraction.m_numerator >> c >> fraction.m_denominator;
+		stream >> fraction.m_numerator >> c >> fraction.m_denominator;
 		if (fraction.m_denominator == 0)
 		{
-			throw Fraction_exception (" in the entered fraction");
+			throw Fraction_exception ("denominator = 0 in the entered fraction");
 		}
 		fraction.reduction();
 		return stream;
@@ -47,7 +47,7 @@ namespace frac
 
 	void Fraction::reduction()
 	{
-		int	div = (m_numerator ? std::gcd(m_numerator, m_denominator) : m_denominator);
+		int	div = std::gcd(m_numerator, m_denominator);
 		try
 		{
 			m_numerator /= div;
@@ -55,8 +55,8 @@ namespace frac
 		}
 		catch (const frac::Fraction_exception& exception)
 		{
-			std::cerr << "catched inside the function reduction of class Fraction : " << exception.what() << exception.where_is() << '\n';
-			throw Fraction_exception(" inside the function reduction of class Fraction", "division by 0");
+			std::cerr << "catched inside the function reduction of class Fraction : " << exception.what() << '\n';
+			throw Fraction_exception("division by 0 inside the function reduction of class Fraction");
 		}		
 	}
 
@@ -68,8 +68,8 @@ namespace frac
 		}
 		catch (const frac::Fraction_exception& exception)
 		{
-			std::cerr << "catched inside the operator int() of class Fraction : " << exception.what() << exception.where_is() << '\n';
-			throw Fraction_exception(" inside the operator int() of class Fraction");
+			std::cerr << "catched inside the operator int() of class Fraction : " << exception.what() << '\n';
+			throw Fraction_exception("denominator = 0 inside the operator int() of class Fraction");
 		}
 	}
 
@@ -108,8 +108,8 @@ namespace frac
 		}
 		catch (const frac::Fraction_exception& exception)
 		{
-			std::cerr << "catched inside the operator/ : " << exception.what() << exception.where_is() << '\n';
-			throw Fraction_exception(" inside the operator/", "division by 0");
+			std::cerr << "catched inside the operator/ : " << exception.what() << '\n';
+			throw Fraction_exception("division by 0 inside the operator/");
 		}
 		return fr;
 	}
@@ -142,7 +142,7 @@ namespace frac
 	{
 		if (other == 0)
 		{
-			throw Fraction_exception (" inside the operator/=", "division by 0");
+			throw Fraction_exception ("division by 0 inside the operator/=");
 		}
 		m_numerator *= other.m_denominator;
 		m_denominator *= other.m_numerator;
@@ -214,8 +214,8 @@ namespace frac
 		}
 		catch (const frac::Fraction_exception& exception)
 		{
-			std::cerr << "catched inside the function Fraction reverse(const Fraction&) : " << exception.what() << exception.where_is() << '\n';
-			throw Fraction_exception(" inside the function Fraction reverse(const Fraction&)");
+			std::cerr << "catched inside the function Fraction reverse(const Fraction&) : " << exception.what() << '\n';
+			throw Fraction_exception("denominator = 0 inside the function Fraction reverse(const Fraction&)");
 		}
 	}
 

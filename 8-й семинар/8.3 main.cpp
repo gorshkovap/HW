@@ -28,7 +28,7 @@ int main()
 	}
 	catch (const frac::Fraction_exception& exception)
 	{
-		std::cerr << "Error : " << exception.what() << exception.where_is() << '\n';
+		std::cerr << "Error : " << exception.what() << '\n';
 	}
 
 	try
@@ -37,7 +37,7 @@ int main()
 	}
 	catch (const frac::Fraction_exception& exception)
 	{
-		std::cerr << "Error : " << exception.what() << exception.where_is() << '\n';
+		std::cerr << "Error : " << exception.what() << '\n';
 	}
 
 	try
@@ -47,7 +47,7 @@ int main()
 	}
 	catch (const frac::Fraction_exception& exception)
 	{
-		std::cerr << "Error : " << exception.what() << exception.where_is() << '\n';
+		std::cerr << "Error : " << exception.what() << '\n';
 	}
 	
 	return 0;
