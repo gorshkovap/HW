@@ -11,7 +11,7 @@ namespace frac
 
 		Fraction(int n, int d = 1);
 
-		~Fraction() = default;
+		~Fraction() noexcept = default;
 
 		Fraction(const Fraction& other) = default;
 		Fraction(Fraction&& other) = default;
@@ -52,12 +52,12 @@ namespace frac
 		friend bool operator<(const Fraction& lhs, const Fraction& rhs);
 		friend bool operator>(const Fraction& lhs, const Fraction& rhs);
 
-		int get_numerator() const
+		int get_numerator() const noexcept
 		{
 			return m_numerator;
 		}
 
-		int get_denominator() const
+		int get_denominator() const noexcept
 		{
 			return m_denominator;
 		}
