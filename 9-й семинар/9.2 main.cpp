@@ -7,18 +7,18 @@ int main()
 		std::vector <double> v = { 2.2, 3.3, 4.4, 1.1, 8.8 };
 		Array <double>arr(v);
 
-		std::cout << arr[3] << '\n';
+		std::cout << arr[3U] << '\n';
 
-		arr[3] = 5.5;
+		arr[3U] = 5.5;
 		std::cout << arr;
 
-		arr.resize(5);
+		arr.resize(5U);
 		std::cout << '\n' << arr;
 
-		arr.resize(7);
+		arr.resize(7U);
 		std::cout << '\n' << arr;
 
-		arr.resize(3);
+		arr.resize(3U);
 		std::cout << '\n' << arr;
 		std::cout << '\n' << arr.size();
 
@@ -32,6 +32,10 @@ int main()
 		swap(arr_2, arr_3);
 		std::cout << '\n' << arr_2;
 		std::cout << '\n' << arr_3;
+
+		arr_3.resize(1U);
+		arr_3.at(0U) = 6.6;
+		std::cout << '\n' << arr_3.at(0U);
 
 		Array <int> ar(1'000'000'000U);
 	}
