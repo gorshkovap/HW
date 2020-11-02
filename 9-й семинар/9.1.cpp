@@ -83,6 +83,7 @@ int main()
 	{
 		std::cout << int_array[i] << ' ';
 	}
+	delete[] int_array;
 
 	std::cout << '\n';
 
