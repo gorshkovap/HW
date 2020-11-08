@@ -26,10 +26,7 @@ template <typename Derived>
 class BaseCRTP
 {
 public:
-	void del()
-	{
-		delete self();
-	}
+	virtual ~BaseCRTP() noexcept = default;
 
 	void print(std::ostream& stream)
 	{
@@ -49,14 +46,12 @@ public:
 	DerivedCRTP() : m_i(0) {}
 	DerivedCRTP(int i) : m_i(i) {}
 
-private:
 	void print(std::ostream& stream) const
 	{
 		stream << m_i;
 	}
 
-	friend class BaseCRTP<DerivedCRTP>;
-
+private:
 	int m_i;
 };
 
@@ -71,8 +66,8 @@ int main()
 
 	ptr_2->print(std::cout);
 
-	delete(ptr_1);
-	ptr_2->del();
+	delete ptr_1;
+	delete ptr_2;
 
 
 	return 0;
