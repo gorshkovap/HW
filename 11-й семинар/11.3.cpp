@@ -37,49 +37,63 @@ struct remove_reference < T&& >
 template <typename T>
 using remove_reference_t = typename remove_reference<T>::type; //type alias (template)
 
-template <typename T>
-struct check_array
+template < bool C, typename True_Type, typename False_Type >
+struct if_then_else
+{
+	using type = True_Type;
+};
+
+template < typename True_Type, typename False_Type >
+struct if_then_else < false, True_Type, False_Type >
+{
+	using type = False_Type;
+};
+
+template < bool C, typename TT, typename FT >
+using if_then_else_t = typename if_then_else < C, TT, FT >::type;
+
+template < typename T >
+struct Is_array : std::false_type
+{};
+
+template < typename T, std::size_t N >
+struct Is_array < T[N] > : std::true_type
 {
 	using type = T;
 };
 
-template <typename T, std::size_t N>
-struct check_array < T[N] > // changes arrays of T on T*
-{
-	using type = T*;
-};
-
-template <typename T>
-struct check_array < T[] > // changes arrays of T on T*
-{
-	using type = T*;
-};
-
-template <typename T>
-using ptr_if_array = typename check_array<T>::type; //type alias (template)
-
-template <typename T>
-struct check_function 
+template < typename T >
+struct Is_array < T[] > : std::true_type
 {
 	using type = T;
 };
 
-template <typename F, typename ... Args>
-struct check_function<F(Args...)> //adds * for functions
+template <typename T>
+inline constexpr bool is_array = Is_array<T>::value; // variable template
+
+template <typename T>
+using is_array_t = typename Is_array<T>::type; //type alias (template)
+
+template <typename T > //common choice
+struct Is_function : std::false_type {};
+
+template <typename F, typename ... Args> //when the argument is function, this template specialization is chosen and value = Is_function::value = true
+struct Is_function<F(Args...)> : std::true_type 
 {
-	using type = F*;
+	using type = F;
 };
 
 template <typename T>
-using ptr_if_function = typename check_function<T>::type; //type alias (template)
+inline constexpr bool is_function = Is_function<T>::value; // variable template
+
+template <typename T>
+using is_function_t = typename Is_function<T>::type; //type alias (template)
 
 template <typename T>
 struct decay
 {
-	using T1 = remove_reference_t<T>; 
-	using T2 = remove_const_t<T1>;
-	using T3 = ptr_if_array<T2>;
-	using type = ptr_if_function<T3>;
+	using T1 = remove_reference_t<T>;
+	using type = if_then_else_t < is_array<T1>, is_array_t<T1>*, if_then_else_t<is_function<T1>, is_function_t<T1>*, remove_const_t<T1> > >;
 };
 
 template <typename T>
@@ -102,7 +116,7 @@ int main()
 	std::cout << std::boolalpha;
 
 	std::cout << is_same_v<decay_t<decltype(a)>, int*> << '\n';	
-	std::cout << is_same_v<decay_t<decltype(b)>, int*> << '\n';
+	std::cout << is_same_v<decay_t<decltype(b)>, const int*> << '\n';
 	std::cout << is_same_v<decay_t<decltype(g)>, int*> << '\n';
 	std::cout << is_same_v<decay_t<decltype(f)>, void*> << '\n';
 	std::cout << is_same_v<decay_t<decltype(x)>, int> << '\n';
