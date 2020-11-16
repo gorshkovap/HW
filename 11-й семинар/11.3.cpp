@@ -78,22 +78,16 @@ template <typename T > //common choice
 struct Is_function : std::false_type {};
 
 template <typename F, typename ... Args> //when the argument is function, this template specialization is chosen and value = Is_function::value = true
-struct Is_function<F(Args...)> : std::true_type 
-{
-	using type = F;
-};
+struct Is_function<F(Args...)> : std::true_type {};
 
 template <typename T>
 inline constexpr bool is_function = Is_function<T>::value; // variable template
 
 template <typename T>
-using is_function_t = typename Is_function<T>::type; //type alias (template)
-
-template <typename T>
 struct decay
 {
 	using T1 = remove_reference_t<T>;
-	using type = if_then_else_t < is_array<T1>, is_array_t<T1>*, if_then_else_t<is_function<T1>, is_function_t<T1>*, remove_const_t<T1> > >;
+	using type = if_then_else_t < is_array<T1>, is_array_t<T1>*, if_then_else_t<is_function<T1>, std::add_pointer_t<T1>, remove_const_t<T1> > >;
 };
 
 template <typename T>
@@ -117,8 +111,8 @@ int main()
 
 	std::cout << is_same_v<decay_t<decltype(a)>, int*> << '\n';	
 	std::cout << is_same_v<decay_t<decltype(b)>, const int*> << '\n';
-	std::cout << is_same_v<decay_t<decltype(g)>, int*> << '\n';
-	std::cout << is_same_v<decay_t<decltype(f)>, void*> << '\n';
+	std::cout << is_same_v<decay_t<decltype(g)>, int(*)(int)> << '\n';
+	std::cout << is_same_v<decay_t<decltype(f)>, void(*)()> << '\n';
 	std::cout << is_same_v<decay_t<decltype(x)>, int> << '\n';
 	std::cout << is_same_v<decay_t<decltype(std::move(x))>, int> << '\n';
 	std::cout << is_same_v<decay_t<decltype(y)>, int> << '\n';
