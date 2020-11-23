@@ -1,27 +1,27 @@
 #include <iostream>
 #include <array>
 
-constexpr int sqrt_binary(int n, int left, int right)
+constexpr int sqrt_binary(int n)
 {
-	if (left == right)
+	int left = 1, right = n - 1;
+	int middle = left + ((right - left) / 2);
+	while (left != right)
 	{
-		return right;
+		middle = left + ((right - left) / 2);
+		n / middle < middle ? right = middle : left = middle + 1;
 	}
-
-	const int middle = left + ((right - left) / 2);
-
-	return (n / middle < middle ? sqrt_binary(n, left, middle) : sqrt_binary(n, middle + 1, right));
+	return right;
 }
 
 constexpr int integer_sqrt(int n) //rounded up
 {
-	return sqrt_binary(n, 1, n - 1);
+	return sqrt_binary(n);
 }
 
-template< const std::size_t N >
-constexpr bool is_prime(int n, std::array <int, N> arr, std::size_t elem_num)
+template< int N >
+constexpr bool is_prime(int n, const std::array <int, N>& arr, int elem_num)
 {
-	for (auto i = 0U; (i < elem_num) && arr[i] < integer_sqrt(n); ++i)
+	for (auto i = 0; (i < elem_num) && arr[i] < integer_sqrt(n); ++i)
 	{
 		if (n % arr[i] == 0)
 		{
@@ -31,31 +31,26 @@ constexpr bool is_prime(int n, std::array <int, N> arr, std::size_t elem_num)
 	return true;
 }
 
-template< const std::size_t N >
+template< int N >
 constexpr int prime()
 {
 	std::array<int, N> primes{};
 	primes[0] = 2;
-
-	auto current_number = 3;
-
-	for (auto index = 1; index < N; ++index)
+	for (auto current_number = 3, index = 1; index < N; ++index, current_number += 2)
 	{
 		for (; !(is_prime(current_number, primes, index)); current_number+=2);
 		primes[index] = current_number;
-		current_number += 2;
 	}
-
 	return primes[N - 1];
 }
 
 int main()
 {
-	constexpr int primes_1_10[] = { prime<1U>(), prime<2U>(), prime<3U>(), prime<4U>(), prime<5U>(), prime<6U>(), prime<7U>(), prime<8U>(), prime<9U>(), prime<10U>() };
-	constexpr int prime_20 = prime<20U>();
-	constexpr int prime_100 = prime<100U>();
-	constexpr int prime_200 = prime<200U>();
-	constexpr int prime_300 = prime<300U>();
+	constexpr int primes_1_10[] = { prime<1>(), prime<2>(), prime<3>(), prime<4>(), prime<5>(), prime<6>(), prime<7>(), prime<8>(), prime<9>(), prime<10>() };
+	constexpr int prime_20 = prime<20>();
+	constexpr int prime_100 = prime<100>();
+	constexpr int prime_200 = prime<200>();
+	constexpr int prime_300 = prime<300>();
 
 	std::cout << "1st-10th primes: ";
 	for (auto i = 0U; i < 10U; ++i)
