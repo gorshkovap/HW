@@ -1,7 +1,7 @@
 #include <iostream>
 #include <array>
 
-constexpr int sqrt_binary(int n)
+constexpr int integer_sqrt(int n) //rounded up
 {
 	int left = 1, right = n - 1;
 	int middle = left + ((right - left) / 2);
@@ -11,11 +11,6 @@ constexpr int sqrt_binary(int n)
 		n / middle < middle ? right = middle : left = middle + 1;
 	}
 	return right;
-}
-
-constexpr int integer_sqrt(int n) //rounded up
-{
-	return sqrt_binary(n);
 }
 
 template< int N >
